@@ -12,7 +12,7 @@
 
 ## Prerequisites
 - MongoDB – [docs.mongodb.com/manual/installation](https://docs.mongodb.com/manual/installation/)
-- IBM Watson account – [ibm.com/watson](https://www.ibm.com/watson) and acquire API key
+- IBM Watson account – [ibm.com/watson](https://www.ibm.com/watson)
 - Telegram Bot – [core.telegram.org/bots](https://core.telegram.org/bots#6-botfather)
 
 ## Getting started

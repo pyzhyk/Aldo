@@ -15,6 +15,7 @@ trainer = ChatterBotCorpusTrainer(bot)
 trainer.train(
 	"chatterbot.corpus.english",
     "./train/chat.yml",
+    "./train/jokes.yml",
 )
 
 print("Done.")

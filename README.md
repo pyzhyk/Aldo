@@ -32,11 +32,11 @@ git clone https://github.com/pyzhyk/aldo
 - Put your IBM Watson API and Telegram Bot Token in `bot.py` at lines `60` and `100` respectively
 
 ## Training your bot:
-- 
+- English corpus + simple chat yaml training
 ```bash
 python3.6 train.py
 ```
-- 
+- Txt list file training
 ```bash
 python3.6 train-list.py
 ```

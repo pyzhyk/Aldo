@@ -12,11 +12,11 @@ bot = ChatBot(
 
 trainer = ListTrainer(bot)
 
-fileHandler = open("./train/a1.txt", "r")
+fileHandler = open("./train/12-angry-men.txt", "r")
 lines = list()
 while True:
 	line = fileHandler.readline()
-	print(line)
+	#print(line)
 	if not line :
 		break;
 	lines.append(line)

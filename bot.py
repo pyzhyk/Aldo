@@ -10,6 +10,7 @@ import logging
 import subprocess
 from time import sleep
 import wikipedia
+import configparser
 from langdetect import detect
 
 import telegram
@@ -24,6 +25,9 @@ from chatterbot.trainers import ListTrainer
 from chatterbot.comparisons import JaccardSimilarity, LevenshteinDistance
 
 update_id = None
+
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 chatbot = ChatBot(
     'Aldo',
@@ -57,13 +61,13 @@ trainer.train([
     # Your IMB Watson API Key
 visual_recognition = VisualRecognitionV3(
     '2018-03-19',
-    iam_apikey='WATSON_API_KEY')
+    iam_apikey=config['api']['watson'])
 
 def internet_search(query):
     f = open("wiki-queries.txt", "a")
     try:
-        query_lang = detect(query)
-        wikipedia.set_lang(query_lang)
+        #query_lang = detect(query)
+        wikipedia.set_lang('en')
         page = wikipedia.page(query)
         summary = wikipedia.summary(query, sentences=2)
         f.write("- - " + query + "\n")
@@ -73,8 +77,8 @@ def internet_search(query):
     except:
         for newquery in wikipedia.search(query):
             try:
-                newquery_lang = detect(newquery)
-                wikipedia.set_lang(newquery_lang)
+                #newquery_lang = detect(newquery)
+                wikipedia.set_lang('en')
                 page = wikipedia.page(newquery)
                 summary = wikipedia.summary(newquery, sentences=2)
                 f.write("- - " + newquery + "\n")
@@ -91,13 +95,13 @@ def fix_capitalization(usrStr):
         tmp = re.sub('^(\s*\w+)', lambda x:x.group(1).title(), s)
         newstr.append(tmp)
         if s.lstrip()[0] != tmp.lstrip()[0]:
-            numLetters += 1          
+            numLetters += 1
     return '. '.join(newstr).replace(' i ', ' I ')
 
 def main():
     global update_id
     # Telegram Bot Authorization Token
-    bot = telegram.Bot('TELEGRAM_API_KEY')
+    bot = telegram.Bot(config['api']['telegram'])
     try:
         update_id = bot.get_updates()[0].update_id
     except IndexError:
@@ -157,10 +161,10 @@ def loop(bot):
                 if update.message.text == '/start':
                     update.message.reply_text('Hello, ' + update.message.from_user.first_name + ". I am state-of-the-art artificial intelligence bot. How are you doing?")
                 elif update.message.text == '/help':
-                    update.message.reply_text('Look what i can do, ' + update.message.from_user.first_name + ":\n• Intelligent text chat\n• Voice recognition\n• Wikipedia search: just type 'search for smth'\n• Image recognition. Send me an image and I'll try to detect objects on it.\n\nSource code can be found at: github.com/pyzhyk/aldo")
+                    update.message.reply_text('Look what I can do, ' + update.message.from_user.first_name + ":\n• Intelligent text chat\n• Voice recognition\n• Wikipedia search: just type 'search for smth'\n• Image recognition. Send me an image and I'll try to detect objects on it.\n\nSource code can be found at: github.com/pyzhyk/aldo")
                 else:
                     if "search for" in str.lower(update.message.text):
-                            query = str(update.message.text).split('search for ', 2)[1]
+                            query = str(update.message.text).split('search for ', 2)[0]
                             intrnt_srch = internet_search(str.lower(query))
                             if not intrnt_srch:
                                 update.message.reply_text("Sorry, I cannot find '" + query + "' in Wikipedia.")

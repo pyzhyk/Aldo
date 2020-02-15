@@ -1,6 +1,7 @@
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
 import logging
+import sys
 
 logging.basicConfig(level=logging.INFO)
 
@@ -12,7 +13,11 @@ bot = ChatBot(
 
 trainer = ListTrainer(bot)
 
-fileHandler = open("./train/12-angry-men.txt", "r")
+inpFile = sys.argv[1]
+
+print('Using '+inpFile)
+
+fileHandler = open(inpFile, "r")
 lines = list()
 while True:
 	line = fileHandler.readline()
@@ -22,6 +27,6 @@ while True:
 	lines.append(line)
 
 trainer.train(lines)
-fileHandler.close() 
+fileHandler.close()
 
 print('Done.')

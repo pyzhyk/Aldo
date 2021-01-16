@@ -54,4 +54,6 @@ python3.6 bot.py
 ```
 
 ## Donate
-[donate.pyzhyk.org](https://donate.pyzhyk.org)
+![](https://pyzhyk.org/img/14s7eocgkPRXxbwMrjykmpkZixWDu5rGiY-256.png)
+
+BTC [14s7eocgkPRXxbwMrjykmpkZixWDu5rGiY](bitcoin:14s7eocgkPRXxbwMrjykmpkZixWDu5rGiY)
